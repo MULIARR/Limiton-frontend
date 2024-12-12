@@ -1,0 +1,53 @@
+@startuml F
+!pragma layout smetana
+left to right direction
+
+component "TONController" as TON {
+    TON : Ініціалізація інших контролерів
+}
+
+component "TonapiClient" as TAPI {
+    TAPI : Отримання даних з TON API
+}
+component "AccountsController" as AC {
+    AC : Отримання даних про гаманці
+}
+component "JettonController" as JC {
+    JC : Отримання даних про Jetton-токени
+}
+
+component "DeDustController" as DD {
+    DD : Взаємодія з DeDust SDK
+}
+component "LimitOrderController" as LOC {
+    LOC : Створення та керування лімітними ордерами
+}
+component "OrderTaskController" as OTC {
+    OTC : Запуск та управління асинхронними задачами ордерів
+}
+
+component "EncryptionController" as ENC {
+    ENC : Шифрування/дешифрування seed-фраз
+}
+component "WalletController" as WC {
+    WC : Генерація гаманців
+}
+
+TON --> AC : Ініціалізація
+TON --> JC : Ініціалізація
+TON --> DD : Ініціалізація
+TON --> LOC : Ініціалізація
+TON --> OTC : Ініціалізація
+TON --> ENC : Ініціалізація
+TON --> WC : Ініціалізація
+TON --> TAPI : Ініціалізація
+
+AC --> TAPI : Запит даних гаманців
+JC --> TAPI : Запит даних жетонів
+
+LOC --> DD : Оцінка та виконання ордерів
+LOC --> OTC : Створення/керування асинхронними задачами ордерів
+
+WC --> ENC : Шифрування seed-фраз
+
+@enduml

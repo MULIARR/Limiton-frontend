@@ -1,0 +1,17 @@
+@startuml D
+start
+:User runs /start;
+:Telegram Bot -> Backend: Check user in DB;
+if (User exists?) then (No)
+  :Backend -> WalletController: Create wallet;
+  :WalletController returns seed phrase;
+  :Backend -> EncryptionController: Encrypt seed;
+  :Store encrypted seed & wallet data in DB;
+else (Yes)
+  :No wallet creation needed;
+endif
+
+:Backend -> Telegram Bot: User ready;
+:Telegram Bot: Show start menu;
+stop
+@enduml
